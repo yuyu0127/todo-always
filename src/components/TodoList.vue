@@ -28,40 +28,37 @@ export default {
     deleteItem: function(item) {
       this.itemList.find((x) => x == item).isDeleted = true;
     },
+    addItem: function(title, deadline) {
+      this.itemList.push({
+        id: this.itemList.length + 1,
+        title: title,
+        deadline: deadline,
+        isDone: false,
+        isDeleted: false,
+      });
+    },
+    saveJson: function() {
+      const data = JSON.stringify(this.itemList);
+      console.log(data);
+    },
+  },
+  mounted: function() {
+    this.axios.get("todo.json").then((response) => {
+      this.itemList = response.data;
+    });
   },
   data() {
     return {
-      itemList: [
-        {
-          id: 1,
-          title: "Task1",
-          deadline: "2021-02-11T12:23:34",
-          isDone: true,
-          isDeleted: false,
-        },
-        {
-          id: 2,
-          title: "Task2",
-          deadline: "2021-03-06T12:23:34",
-          isDone: false,
-          isDeleted: false,
-        },
-        {
-          id: 3,
-          title: "Task3",
-          deadline: "2021-02-12T12:23:34",
-          isDone: true,
-          isDeleted: false,
-        },
-        {
-          id: 4,
-          title: "Task4",
-          deadline: "2021-02-11T19:46:34",
-          isDone: false,
-          isDeleted: false,
-        },
-      ],
+      itemList: [],
     };
+  },
+  watch: {
+    itemList: {
+      handler: function() {
+        this.saveJson();
+      },
+      deep: true,
+    },
   },
 };
 </script>
