@@ -22,7 +22,7 @@ export default {
   --incompleted-color: rgba(255, 255, 255, 0.8);
   --completed-color: rgba(255, 255, 255, 0.3);
   --passed-color: rgba(255, 32, 32, 0.9);
-  --theme-color: rgba(108, 192, 229, 0.8);
+  --theme-color: rgba(108, 192, 229, 0.9);
 }
 
 html {
