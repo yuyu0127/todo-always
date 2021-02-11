@@ -1,15 +1,35 @@
 <template>
-  <div class="item">
+  <div
+    class="item"
+    :class="[
+      { done: item.isDone },
+      { passed: remainingTime < 0 },
+      { hidden: item.isDeleted },
+    ]"
+  >
     <input type="checkbox" :id="item.id" v-model="item.isDone" />
-    <label :for="item.id">
-      <span class="title">{{ item.title }}</span>
-      <span class="deadline">{{ item.deadline }}</span>
-      <span class="remain">{{ remainingTimeStr }}</span>
+    <label class="content" :for="item.id">
+      <div class="title">{{ item.title }}</div>
+      <div class="timeinfo">
+        <div class="deadline">{{ deadlineStr }}</div>
+        <div class="remain">{{ remainingTimeStr }}</div>
+      </div>
+      <button class="edit">
+        <font-awesome-icon :icon="['far', 'edit']" />
+      </button>
+      <button class="delete" @click="$emit('deleteItem', item)">
+        <font-awesome-icon :icon="['far', 'trash-alt']" />
+      </button>
     </label>
   </div>
 </template>
 
 <script>
+import dayjs from "dayjs";
+import "dayjs/locale/ja";
+
+dayjs.locale("ja");
+
 export default {
   name: "TodoItem",
   props: {
@@ -21,24 +41,66 @@ export default {
     };
   },
   computed: {
+    deadlineStr: function() {
+      return dayjs(this.item.deadline).format("M/D HH:mm");
+    },
+
     remainingTimeStr: function() {
-      return "あと" + this.remainingTime.toString();
+      const isPassed = this.remainingTime < 0;
+      const sec = Math.abs(this.remainingTime) / 1000;
+      const min = sec / 60;
+      const hour = min / 60;
+      const day = hour / 24;
+      const secMod = sec % 60;
+      const minMod = min % 60;
+      const hourMod = hour % 24;
+      let str = "";
+      if (!isPassed) {
+        str += "あと ";
+      }
+      if (day > 1) {
+        str += `${Math.floor(day)}日`;
+        str += `${Math.floor(hourMod)}時間`;
+      } else if (hour > 1) {
+        str += `${Math.floor(hourMod)}時間`;
+        str += `${Math.floor(minMod)}分`;
+      } else if (min > 1) {
+        str += `${Math.floor(minMod)}分`;
+        str += `${Math.floor(secMod)}秒`;
+      } else {
+        str += `${Math.floor(secMod)}秒`;
+      }
+      if (isPassed) {
+        str += " 超過";
+      }
+      return str;
     },
   },
   mothods: {},
   mounted: function() {
     let self = this;
     setInterval(function() {
-      const rt = new Date(self.item.deadline) - Date.now();
+      const rt = dayjs(self.item.deadline).diff(dayjs());
       self.remainingTime = rt;
-    }, 1000);
+    }, 100);
   },
 };
 </script>
 
 <style scoped>
 .item {
-  height: 2em;
+  height: 3em;
+  margin-bottom: 0.5em;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+.item.done {
+  height: 1.5em;
+}
+.item.hidden {
+  height: 0;
+  margin-bottom: 0;
 }
 
 input[type="checkbox"] {
@@ -51,7 +113,6 @@ input[type="checkbox"] + label {
   padding-left: 35px;
   margin-bottom: 20px;
   font: 14px/20px "Open Sans", Arial, sans-serif;
-  color: #ddd;
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -67,10 +128,11 @@ input[type="checkbox"] + label:before {
   display: block;
   width: 20px;
   height: 20px;
-  border: 1px solid #6cc0e5;
+  border: 1px solid var(--theme-color);
   position: absolute;
   left: 0;
-  top: 0;
+  top: 50%;
+  transform: translateY(-50%);
   opacity: 0.6;
   transition: all 0.2s, border-color 0.08s;
 }
@@ -83,39 +145,73 @@ input[type="checkbox"]:checked + label:before {
   opacity: 1;
   border-top-color: transparent;
   border-left-color: transparent;
-  -webkit-transform: rotate(45deg);
   transform: rotate(45deg);
 }
 
-input[type="checkbox"]:checked + label {
-  color: rgba(255, 255, 255, 0.3);
+label {
+  color: var(--incompleted-color);
   transition: all 0.3s;
 }
-
-input[type="checkbox"] + label::after {
-  position: absolute;
-  left: 30px;
-  right: calc(100% - 30px);
-  top: 50%;
-  height: 1px;
-  background-color: rgba(255, 255, 255, 0.3);
-  content: "";
-  transition: all 0.3s;
+.passed label {
+  color: var(--passed-color);
 }
-input[type="checkbox"]:checked + label::after {
-  right: 0;
+.done label {
+  color: var(--completed-color);
 }
 
 .title {
+  font-size: 1.3em;
   display: inline-block;
-  width: 100px;
 }
+
+.title::after {
+  position: absolute;
+  left: 30px;
+  top: 10px;
+  width: 0;
+  height: 1px;
+  background-color: var(--completed-color);
+  content: "";
+  transition: all 0.3s;
+}
+.done .title::after {
+  width: calc(100% - 30px - 60px);
+}
+
 .deadline {
   display: inline-block;
-  width: 150px;
+  width: 90px;
 }
 .remain {
   display: inline-block;
   width: auto;
+}
+
+button {
+  border: none;
+  background: none;
+  color: var(--theme-color);
+}
+.edit {
+  right: 25px;
+}
+.delete {
+  right: 5px;
+}
+button {
+  position: absolute;
+  height: 3em;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: all 0.2s;
+  opacity: 0;
+  pointer-events: none;
+}
+label:hover button {
+  opacity: 1;
+  pointer-events: auto;
+}
+.done button {
+  top: 10px;
 }
 </style>
