@@ -39,7 +39,11 @@ export default {
     },
     saveJson: function() {
       const data = JSON.stringify(this.itemList);
-      console.log(data);
+      window.requires.fs.writeFile("todo.json", data, (err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
     },
   },
   mounted: function() {
