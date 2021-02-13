@@ -47,9 +47,18 @@ export default {
     },
   },
   mounted: function() {
-    this.axios.get("todo.json").then((response) => {
-      this.itemList = response.data;
-    });
+    window.requires.fs.readFile(
+      "todo.json",
+      { encoding: "utf8" },
+      (err, data) => {
+        if (err) {
+          console.log(err);
+          this.saveJson();
+        } else {
+          this.itemList = JSON.parse(data);
+        }
+      }
+    );
   },
   data() {
     return {
