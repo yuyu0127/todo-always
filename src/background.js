@@ -48,12 +48,12 @@ async function createTray() {
     imgFilePath = __dirname + '/images/icon.png'
   }
   const contextMenu = Menu.buildFromTemplate([
-    { label: '終了', role: 'quit' },
     { label: '表示', click: focusWindow },
-    { label: '常に最前面に表示', type: 'checkbox', click: toggleOnTop }
+    { label: '常に最前面に表示', type: 'checkbox', click: toggleOnTop },
+    { label: '終了', role: 'quit' },
   ])
   tray = new Tray(imgFilePath)
-  tray.setToolTip(app.name)
+  tray.setToolTip('ToDo Always')
   tray.setContextMenu(contextMenu)
 }
 
