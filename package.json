@@ -1,6 +1,10 @@
 {
   "name": "todo-always",
   "version": "0.1.0",
+  "description": "いつも画面に常駐させられるTODOアプリ",
+  "author": {
+    "name": "yuyu"
+  },
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
