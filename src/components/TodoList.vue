@@ -11,9 +11,7 @@
         :item="item"
       />
     </div>
-    <div class="button-wrapper">
-      <button class="add-button"></button>
-    </div>
+    <button class="add-button" @click="addItem"></button>
     <ModalWindow
       v-show="showModal"
       :item="activeItem"
@@ -42,9 +40,7 @@ export default {
   },
   computed: {
     sortedItemList: function() {
-      return [...this.itemList].sort(
-        (a, b) => new Date(a.deadline) - new Date(b.deadline)
-      );
+      return [...this.itemList].sort((a) => -new Date(a.deadline));
     },
   },
   methods: {
@@ -63,11 +59,11 @@ export default {
       console.log("cancel");
       this.showModal = false;
     },
-    addItem: function(title, deadline) {
+    addItem: function() {
       this.itemList.push({
         id: this.itemList.length + 1,
-        title: title,
-        deadline: deadline,
+        title: "新しいタスク",
+        deadline: null,
         isDone: false,
         isDeleted: false,
       });
@@ -118,23 +114,34 @@ export default {
 .todo-list {
   height: calc(100% - 16px);
 }
-.button-wrapper {
+.add-button {
+  width: 100%;
+  height: 20px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  cursor: pointer;
+  background: none;
+  border: none;
   position: relative;
 }
-.add-button {
-  position: absolute;
-  cursor: pointer;
-  right: 0;
-  bottom: 0;
-  width: 2em;
-  height: 2em;
-  border: none;
-  border-radius: 50%;
-  background-color: var(--theme-color);
-  margin: 0.5em;
-  opacity: 0;
+.add-button:focus {
+  outline: none;
 }
-.add-button:hover {
-  opacity: 1;
+.add-button::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  right: 50%;
+  height: 1px;
+  background: var(--theme-color);
+  opacity: 0.3;
+  transition: all 300ms;
+}
+
+.add-button:hover::after {
+  left: 12px;
+  right: 12px;
 }
 </style>

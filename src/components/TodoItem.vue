@@ -95,6 +95,9 @@ export default {
   overflow: hidden;
   transition: all 0.2s;
 }
+.item:last-child {
+  margin-bottom: 0;
+}
 .item.done {
   height: 1.5em;
 }
