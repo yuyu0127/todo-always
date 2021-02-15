@@ -38,14 +38,21 @@ export default {
   data: function() {
     return {
       remainingTime: Date.now(),
+      setIntervalId: null,
     };
   },
   computed: {
     deadlineStr: function() {
+      if (!this.item.deadline) {
+        return "締切未設定";
+      }
       return dayjs(this.item.deadline).format("M/D HH:mm");
     },
 
     remainingTimeStr: function() {
+      if (isNaN(this.remainingTime)) {
+        return "";
+      }
       const isPassed = this.remainingTime < 0;
       const sec = Math.abs(this.remainingTime) / 1000;
       const min = sec / 60;
@@ -79,10 +86,13 @@ export default {
   mothods: {},
   mounted: function() {
     let self = this;
-    setInterval(function() {
+    this.setIntervalId = setInterval(function() {
       const rt = dayjs(self.item.deadline).diff(dayjs());
       self.remainingTime = rt;
     }, 100);
+  },
+  destroyed: function() {
+    clearInterval(this.setIntervalId);
   },
 };
 </script>

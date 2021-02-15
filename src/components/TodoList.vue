@@ -14,7 +14,7 @@
     <button class="add-button" @click="addItem"></button>
     <ModalWindow
       v-show="showModal"
-      :item="activeItem"
+      :item="copiedItem"
       :confirmEdit="confirmEdit"
       :cancelEdit="cancelEdit"
     />
@@ -32,6 +32,7 @@ export default {
       itemList: [],
       showModal: false,
       activeItem: {},
+      copiedItem: {},
     };
   },
   components: {
@@ -49,24 +50,27 @@ export default {
     },
     editItem: function(item) {
       this.activeItem = item;
+      this.copiedItem = Object.assign({}, item);
       this.showModal = true;
     },
     confirmEdit: function() {
-      console.log("confirm");
+      this.activeItem.title = this.copiedItem.title;
+      this.activeItem.deadline = this.copiedItem.deadline;
       this.showModal = false;
     },
     cancelEdit: function() {
-      console.log("cancel");
       this.showModal = false;
     },
     addItem: function() {
-      this.itemList.push({
+      const newItem = {
         id: this.itemList.length + 1,
         title: "新しいタスク",
-        deadline: null,
+        deadline: "",
         isDone: false,
         isDeleted: false,
-      });
+      };
+      this.itemList.push(newItem);
+      this.editItem(newItem);
     },
     saveJson: function() {
       const data = JSON.stringify(this.itemList);
