@@ -218,4 +218,7 @@ label:hover button {
 .done button {
   top: 10px;
 }
+button:focus {
+  outline: none;
+}
 </style>

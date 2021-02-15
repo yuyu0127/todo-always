@@ -1,11 +1,13 @@
 'use strict'
 
-import { app, protocol, BrowserWindow } from 'electron'
+import { app, protocol, BrowserWindow, Tray, Menu } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
-const path = require("path");
+const path = require("path")
+let tray = null
+let win = null
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -14,11 +16,12 @@ protocol.registerSchemesAsPrivileged([
 
 async function createWindow() {
   // Create the browser window.
-  const win = new BrowserWindow({
+  win = new BrowserWindow({
     width: 300,
-    height: 240,
+    height: 280,
     frame: false,
     transparent: true,
+    skipTaskbar: true,
     webPreferences: {
       preload: path.join(__dirname, 'preload.js'),
       contextIsolation: true,
@@ -34,6 +37,31 @@ async function createWindow() {
     // Load the index.html when not in development
     win.loadURL('app://./index.html')
   }
+}
+
+async function createTray() {
+  let imgFilePath
+  if (process.platform === 'win32') { // Windows
+    imgFilePath = __dirname + '/images/icon.ico'
+  }
+  else { // macOS
+    imgFilePath = __dirname + '/images/icon.png'
+  }
+  const contextMenu = Menu.buildFromTemplate([
+    { label: '終了', role: 'quit' },
+    { label: '表示', click: focusWindow },
+    { label: '常に最前面に表示', type: 'checkbox', click: toggleOnTop }
+  ])
+  tray = new Tray(imgFilePath)
+  tray.setToolTip(app.name)
+  tray.setContextMenu(contextMenu)
+}
+
+function toggleOnTop(menuItem, browserWindow, event) { // eslint-disable-line
+  win.setAlwaysOnTop(menuItem.checked)
+}
+function focusWindow(menuItem, browserWindow, event) { // eslint-disable-line
+  win.focus()
 }
 
 // Quit when all windows are closed.
@@ -64,6 +92,7 @@ app.on('ready', async () => {
     }
   }
   createWindow()
+  createTray()
 })
 
 // Exit cleanly on request from parent process in development mode.

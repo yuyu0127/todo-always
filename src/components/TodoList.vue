@@ -11,6 +11,9 @@
         :item="item"
       />
     </div>
+    <div class="button-wrapper">
+      <button class="add-button"></button>
+    </div>
     <ModalWindow
       v-show="showModal"
       :item="activeItem"
@@ -109,5 +112,29 @@ export default {
   flex-direction: column;
   margin: auto;
   padding: 1em 0 0 1em;
+  box-sizing: border-box;
+  height: 100%;
+}
+.todo-list {
+  height: calc(100% - 16px);
+}
+.button-wrapper {
+  position: relative;
+}
+.add-button {
+  position: absolute;
+  cursor: pointer;
+  right: 0;
+  bottom: 0;
+  width: 2em;
+  height: 2em;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--theme-color);
+  margin: 0.5em;
+  opacity: 0;
+}
+.add-button:hover {
+  opacity: 1;
 }
 </style>

@@ -27,7 +27,6 @@ export default {
 
 html {
   background-color: var(--app-bg-color);
-  height: 100%;
 }
 
 body {
@@ -35,9 +34,13 @@ body {
   height: 100%;
 }
 
+#app {
+  height: 100%;
+}
+
 .bar {
   background-color: rgba(32, 64, 80, 0.8);
-  height: 1em;
+  height: 16px;
   width: 100%;
   -webkit-app-region: drag;
 }
