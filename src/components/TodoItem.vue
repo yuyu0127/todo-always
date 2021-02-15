@@ -14,7 +14,7 @@
         <div class="deadline">{{ deadlineStr }}</div>
         <div class="remain">{{ remainingTimeStr }}</div>
       </div>
-      <button class="edit">
+      <button class="edit" @click="$emit('editItem', item)">
         <font-awesome-icon :icon="['far', 'edit']" />
       </button>
       <button class="delete" @click="$emit('deleteItem', item)">
@@ -112,7 +112,8 @@ input[type="checkbox"] + label {
   position: relative;
   padding-left: 35px;
   margin-bottom: 20px;
-  font: 14px/20px "Open Sans", Arial, sans-serif;
+  font: 14px/20px "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN",
+    "Hiragino Sans", Meiryo, sans-serif;
   cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -149,19 +150,22 @@ input[type="checkbox"]:checked + label:before {
 }
 
 label {
-  color: var(--incompleted-color);
+  color: var(--main-color);
   transition: all 0.3s;
 }
 .passed label {
-  color: var(--passed-color);
+  color: var(--danger-font-color);
 }
 .done label {
-  color: var(--completed-color);
+  color: var(--gray-color);
 }
 
 .title {
   font-size: 1.3em;
   display: inline-block;
+  width: calc(100% - 60px);
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .title::after {
@@ -170,7 +174,7 @@ label {
   top: 10px;
   width: 0;
   height: 1px;
-  background-color: var(--completed-color);
+  background-color: var(--gray-color);
   content: "";
   transition: all 0.3s;
 }

@@ -18,10 +18,10 @@ export default {
 
 <style>
 :root {
-  --app-bg-color: rgba(0, 0, 0, 0.8);
-  --incompleted-color: rgba(255, 255, 255, 0.8);
-  --completed-color: rgba(255, 255, 255, 0.3);
-  --passed-color: rgba(255, 32, 32, 0.9);
+  --app-bg-color: rgba(16, 16, 16, 0.9);
+  --main-color: rgba(255, 255, 255, 0.8);
+  --gray-color: rgba(255, 255, 255, 0.3);
+  --danger-font-color: rgba(255, 32, 32, 0.9);
   --theme-color: rgba(108, 192, 229, 0.9);
 }
 

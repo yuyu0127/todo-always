@@ -1,21 +1,41 @@
 <template>
   <div class="todo-list">
-    <TodoItem
-      v-on:deleteItem="deleteItem"
-      v-for="item in sortedItemList"
-      v-bind:key="item.id"
-      :item="item"
+    <div class="todo-items">
+      <TodoItem
+        v-on:deleteItem="deleteItem"
+        v-on:editItem="editItem"
+        v-on:confirmEdit="confirmEdit"
+        v-on:cancelEdit="cancelEdit"
+        v-for="item in sortedItemList"
+        v-bind:key="item.id"
+        :item="item"
+      />
+    </div>
+    <ModalWindow
+      v-show="showModal"
+      :item="activeItem"
+      :confirmEdit="confirmEdit"
+      :cancelEdit="cancelEdit"
     />
   </div>
 </template>
 
 <script>
 import TodoItem from "./TodoItem.vue";
+import ModalWindow from "./ModalWindow.vue";
 
 export default {
   name: "TodoList",
+  data() {
+    return {
+      itemList: [],
+      showModal: false,
+      activeItem: {},
+    };
+  },
   components: {
     TodoItem,
+    ModalWindow,
   },
   computed: {
     sortedItemList: function() {
@@ -27,6 +47,18 @@ export default {
   methods: {
     deleteItem: function(item) {
       this.itemList.find((x) => x == item).isDeleted = true;
+    },
+    editItem: function(item) {
+      this.activeItem = item;
+      this.showModal = true;
+    },
+    confirmEdit: function() {
+      console.log("confirm");
+      this.showModal = false;
+    },
+    cancelEdit: function() {
+      console.log("cancel");
+      this.showModal = false;
     },
     addItem: function(title, deadline) {
       this.itemList.push({
@@ -60,11 +92,6 @@ export default {
       }
     );
   },
-  data() {
-    return {
-      itemList: [],
-    };
-  },
   watch: {
     itemList: {
       handler: function() {
@@ -77,7 +104,7 @@ export default {
 </script>
 
 <style scoped>
-.todo-list {
+.todo-items {
   display: flex;
   flex-direction: column;
   margin: auto;
