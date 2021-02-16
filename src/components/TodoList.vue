@@ -1,7 +1,7 @@
 <template>
   <div class="todo-list">
     <div class="todo-items">
-      <transition-group>
+      <transition-group name="item">
         <TodoItem
           v-on:deleteItem="deleteItem"
           v-on:editItem="editItem"
@@ -14,12 +14,14 @@
       </transition-group>
     </div>
     <button class="add-button" @click="addItem"></button>
-    <ModalWindow
-      v-show="showModal"
-      :item="copiedItem"
-      :confirmEdit="confirmEdit"
-      :cancelEdit="cancelEdit"
-    />
+    <transition name="modal">
+      <ModalWindow
+        v-show="showModal"
+        :item="copiedItem"
+        :confirmEdit="confirmEdit"
+        :cancelEdit="cancelEdit"
+      />
+    </transition>
   </div>
 </template>
 
@@ -153,15 +155,24 @@ export default {
   right: 12px;
 }
 
-.v-enter-active,
-.v-leave-active {
+.item-enter-active,
+.item-leave-active {
   transition: all 600ms;
 }
-.v-move {
+.item-move {
   transition: all 300ms;
 }
-.v-enter,
-.v-leave-to {
+.item-enter,
+.item-leave-to {
   height: 0;
+}
+
+.modal-enter-active,
+.modal-leave-active {
+  transition: all 200ms ease-in-out;
+}
+.modal-enter,
+.modal-leave-to {
+  opacity: 0;
 }
 </style>
