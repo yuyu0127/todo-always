@@ -1,15 +1,17 @@
 <template>
   <div class="todo-list">
     <div class="todo-items">
-      <TodoItem
-        v-on:deleteItem="deleteItem"
-        v-on:editItem="editItem"
-        v-on:confirmEdit="confirmEdit"
-        v-on:cancelEdit="cancelEdit"
-        v-for="item in sortedItemList"
-        v-bind:key="item.id"
-        :item="item"
-      />
+      <transition-group>
+        <TodoItem
+          v-on:deleteItem="deleteItem"
+          v-on:editItem="editItem"
+          v-on:confirmEdit="confirmEdit"
+          v-on:cancelEdit="cancelEdit"
+          v-for="item in sortedItemList"
+          v-bind:key="item.id"
+          :item="item"
+        />
+      </transition-group>
     </div>
     <button class="add-button" @click="addItem"></button>
     <ModalWindow
@@ -41,7 +43,19 @@ export default {
   },
   computed: {
     sortedItemList: function() {
-      return [...this.itemList].sort((a) => -new Date(a.deadline));
+      return [...this.itemList]
+        .sort((a, b) => {
+          return new Date(a.deadline) - new Date(b.deadline);
+        })
+        .sort((a, b) => {
+          if (a.isDone == b.isDone) {
+            return 0;
+          } else if (a.isDone && !b.isDone) {
+            return 1;
+          } else {
+            return -1;
+          }
+        });
     },
   },
   methods: {
@@ -147,5 +161,17 @@ export default {
 .add-button:hover::after {
   left: 12px;
   right: 12px;
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: all 600ms;
+}
+.v-move {
+  transition: all 300ms;
+}
+.v-enter,
+.v-leave-to {
+  height: 0;
 }
 </style>
