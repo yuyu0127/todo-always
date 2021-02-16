@@ -18,15 +18,19 @@ export default {
 
 <style>
 :root {
-  --app-bg-color: rgba(16, 16, 16, 0.9);
-  --main-color: rgba(255, 255, 255, 0.8);
+  --main-bg-rgb: 16, 16, 16;
+  --main-bg-alpha: 0.9;
+  --modal-bg-rgb: 32, 32, 32;
+  --modal-bg-alpha: 0.9;
+  --main-rgb: 255, 255, 255;
+  --main-alpha: 0.8;
   --gray-color: rgba(255, 255, 255, 0.3);
   --danger-font-color: rgba(255, 32, 32, 0.9);
   --theme-color: rgba(108, 192, 229, 0.9);
 }
 
 html {
-  background-color: var(--app-bg-color);
+  background-color: rgba(var(--main-bg-rgb), var(--main-bg-alpha));
 }
 
 body {

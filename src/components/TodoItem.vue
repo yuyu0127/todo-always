@@ -9,7 +9,7 @@
   >
     <input type="checkbox" :id="item.id" v-model="item.isDone" />
     <label class="content" :for="item.id">
-      <div class="title">{{ item.title }}</div>
+      <div class="title">{{ item.title ? item.title : "タスク未設定" }}</div>
       <div class="timeinfo">
         <div class="deadline">{{ deadlineStr }}</div>
         <div class="remain">{{ remainingTimeStr }}</div>
@@ -163,7 +163,7 @@ input[type="checkbox"]:checked + label:before {
 }
 
 label {
-  color: var(--main-color);
+  color: rgba(var(--main-rgb), var(--main-alpha));
   transition: all 0.3s;
 }
 .passed label {
@@ -217,6 +217,7 @@ button {
 }
 button {
   position: absolute;
+  cursor: pointer;
   height: 3em;
   top: 50%;
   transform: translateY(-50%);

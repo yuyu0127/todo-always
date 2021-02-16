@@ -76,7 +76,7 @@ export default {
   min-width: 210px;
   margin: 5em;
   padding: 1em;
-  background: rgba(32, 32, 32, 1);
+  background: rgba(var(--modal-bg-rgb), var(--modal-bg-alpha));
 }
 
 input {
@@ -84,7 +84,7 @@ input {
   width: 100%;
   background: none;
   border: none;
-  color: var(--main-color);
+  color: rgba(var(--main-rgb), var(--main-alpha));
 }
 
 input:focus {
@@ -121,6 +121,7 @@ input:focus {
 }
 
 button {
+  cursor: pointer;
   width: 50px;
   color: var(--theme-color);
   background: none;
