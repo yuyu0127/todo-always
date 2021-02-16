@@ -44,9 +44,9 @@ export default {
   computed: {
     deadlineStr: function() {
       if (!this.item.deadline) {
-        return "締切未設定";
+        return "締切なし";
       }
-      return dayjs(this.item.deadline).format("M/D HH:mm");
+      return dayjs(this.item.deadline).format("M/D(dd) HH:mm");
     },
 
     remainingTimeStr: function() {
@@ -197,7 +197,7 @@ label {
 
 .deadline {
   display: inline-block;
-  width: 90px;
+  width: 110px;
 }
 .remain {
   display: inline-block;
