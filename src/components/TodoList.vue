@@ -43,19 +43,9 @@ export default {
   },
   computed: {
     sortedItemList: function() {
-      return [...this.itemList]
-        .sort((a, b) => {
-          return new Date(a.deadline) - new Date(b.deadline);
-        })
-        .sort((a, b) => {
-          if (a.isDone == b.isDone) {
-            return 0;
-          } else if (a.isDone && !b.isDone) {
-            return 1;
-          } else {
-            return -1;
-          }
-        });
+      return [...this.itemList].sort(
+        (a, b) => new Date(a.deadline) - new Date(b.deadline)
+      );
     },
   },
   methods: {
