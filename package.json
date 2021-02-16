@@ -1,7 +1,7 @@
 {
   "name": "todo-always",
-  "version": "0.1.0",
-  "description": "いつも画面に常駐させられるTODOアプリ",
+  "version": "1.0.0",
+  "description": "いつも画面に常駐させられるToDoアプリ",
   "author": {
     "name": "yuyu"
   },

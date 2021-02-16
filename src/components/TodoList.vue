@@ -70,7 +70,7 @@ export default {
     addItem: function() {
       const newItem = {
         id: this.itemList.length + 1,
-        title: "新しいタスク",
+        title: "",
         deadline: "",
         isDone: false,
         isDeleted: false,

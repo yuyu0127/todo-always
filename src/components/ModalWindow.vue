@@ -3,17 +3,18 @@
     <div class="content">
       <input
         v-model="item.title"
-        @focus="textFocused = true"
-        @blur="textFocused = false"
+        ref="title"
         type="text"
         placeholder="タスクを入力しよう！"
+        @focus="textFocused = true"
+        @blur="textFocused = false"
       />
       <div class="input-underline" :class="{ focused: textFocused }"></div>
       <input
         v-model="item.deadline"
+        type="datetime-local"
         @focus="datetimeFocused = true"
         @blur="datetimeFocused = false"
-        type="datetime-local"
       />
       <div class="input-underline" :class="{ focused: datetimeFocused }"></div>
       <div class="button-wrapper">
@@ -41,6 +42,11 @@ export default {
       textFocused: false,
       datetimeFocused: false,
     };
+  },
+  watch: {
+    item: function() {
+      this.$refs.title.focus();
+    },
   },
   computed: {},
   mothods: {},
