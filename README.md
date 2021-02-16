@@ -1,24 +1,12 @@
-# todo-always
+# ToDo Always
 
-## Project setup
-```
-npm install
-```
+デスクトップに常駐させられるToDoアプリ
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## スクリーンショット
 
-### Compiles and minifies for production
-```
-npm run build
-```
+![スクリーンショット](screenshot/1.png)
+![スクリーンショット](screenshot/2.png)
 
-### Lints and fixes files
-```
-npm run lint
-```
+## ビルド
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+`npm run electron:build`
