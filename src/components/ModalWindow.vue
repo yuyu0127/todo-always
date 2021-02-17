@@ -91,6 +91,10 @@ input:focus {
   outline: none;
 }
 
+input::placeholder {
+  color: rgba(var(--quiet-foreground-color), var(--quiet-foreground-alpha));
+}
+
 .input-underline {
   position: relative;
   margin-bottom: 1em;
