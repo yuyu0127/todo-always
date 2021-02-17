@@ -12,8 +12,8 @@
         "quiet.foreground.alpha": 0.3,
         "highlighted.foreground.color": "255, 32, 32",
         "highlighted.foreground.alpha": 0.9,
-        "modalWindow.background.color": "32, 32, 32",
-        "modalWindow.background.alpha": 0.9,
+        "modal.background.color": "32, 32, 32",
+        "modal.background.alpha": 0.9,
         "theme.color": "108, 192, 228",
         "theme.alpha": 0.8
     }
