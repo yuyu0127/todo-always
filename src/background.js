@@ -48,20 +48,14 @@ async function createTray() {
     imgFilePath = __dirname + '/images/icon.png'
   }
   const contextMenu = Menu.buildFromTemplate([
-    { label: '表示', click: focusWindow },
-    { label: '常に最前面に表示', type: 'checkbox', click: toggleOnTop },
+    { label: '表示', click: () => win.focus() },
+    { label: '常に最前面に表示', type: 'checkbox', click: (menuItem) => win.setAlwaysOnTop(menuItem.checked) },
     { label: '終了', role: 'quit' },
   ])
   tray = new Tray(imgFilePath)
   tray.setToolTip('ToDo Always')
   tray.setContextMenu(contextMenu)
-}
-
-function toggleOnTop(menuItem, browserWindow, event) { // eslint-disable-line
-  win.setAlwaysOnTop(menuItem.checked)
-}
-function focusWindow(menuItem, browserWindow, event) { // eslint-disable-line
-  win.focus()
+  tray.on('click', () => win.focus())
 }
 
 // Quit when all windows are closed.
