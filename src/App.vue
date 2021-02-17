@@ -46,6 +46,7 @@ export default {
   --highlighted-foreground-color: 255, 32, 32;
   --highlighted-foreground-alpha: 0.9;
   --theme-color: rgb(108, 192, 228);
+  --bar-alpha: 0.3;
 }
 
 html {
