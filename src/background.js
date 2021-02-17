@@ -16,16 +16,10 @@ protocol.registerSchemesAsPrivileged([
 ])
 
 async function createWindow() {
-  let bounds = null;
-  try {
-    bounds = JSON.parse(fs.readFileSync('restore.json', { encoding: 'utf8' }))
-  } catch (e) {
-    bounds = { width: 310, height: 280 }
-  }
-
+  createConfigIfNotExists()
   // Create the browser window.
   win = new BrowserWindow({
-    ...bounds,
+    ...getBounds(),
     frame: false,
     transparent: true,
     skipTaskbar: true,
@@ -79,6 +73,58 @@ async function createTray() {
   tray.setToolTip('ToDo Always')
   tray.setContextMenu(contextMenu)
   tray.on('click', () => win.focus())
+}
+
+function getBounds() {
+  let bounds = null;
+  try {
+    bounds = JSON.parse(fs.readFileSync('restore.json', { encoding: 'utf8' }))
+  } catch (e) {
+    bounds = { width: 310, height: 280 }
+  }
+  return bounds;
+}
+
+function createConfigIfNotExists() {
+  if (!fs.existsSync('config.json')) {
+    const defaultConfig = {
+      "hideDeletedTask": true,
+      "hideDoneTask": false,
+      "sortByDeadline": true,
+      "sortByStatus": true,
+      "appearances": {
+        "main.background.color": "16, 16, 16",
+        "main.background.alpha": 0.9,
+        "main.foreground.color": "255, 255, 255",
+        "main.foreground.alpha": 0.8,
+        "quiet.foreground.color": "255, 255, 255",
+        "quiet.foreground.alpha": 0.3,
+        "highlighted.foreground.color": "255, 32, 32",
+        "highlighted.foreground.alpha": 0.9,
+        "modal.background.color": "32, 32, 32",
+        "modal.background.alpha": 0.9,
+        "theme.color": "108, 192, 228",
+        "theme.alpha": 0.8,
+        "bar.background.color": "32, 64, 80",
+        "bar.background.alpha": 0.9,
+        "bar.foreground.color": "255, 255, 255",
+        "bar.foreground.alpha": 0.5
+      },
+      "localize": {
+        "taskNamePlaceholder": "タスクを入力しよう！",
+        "taskNameNotSet": "タスク未設定",
+        "deadlineNotSet": "締切なし",
+        "dateFormat": "M/D(dd) HH:mm",
+        "day": "日",
+        "hour": "時間",
+        "min": "分",
+        "sec": "秒",
+        "remainingFormat": "あと %s",
+        "overFormat": "%s 超過"
+      }
+    }
+    fs.writeFileSync('config.json', JSON.stringify(defaultConfig, null, '    '))
+  }
 }
 
 // Quit when all windows are closed.
