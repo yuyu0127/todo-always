@@ -17,7 +17,6 @@ export default {
   },
   methods: {
     setProperty: function(name, value) {
-      console.log(name, value);
       document.querySelector(":root").style.setProperty(name, value);
     },
   },
@@ -27,7 +26,6 @@ export default {
       const name = "--" + key.replace(/\./g, "-");
       const value = appearances[key];
       this.setProperty(name, value);
-      console.log(name, value);
     });
   },
 };
