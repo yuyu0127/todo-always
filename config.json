@@ -30,7 +30,7 @@
         "hour": "時間",
         "min": "分",
         "sec": "秒",
-        "remaining": "あと %s",
-        "over": "%s 超過"
+        "remainingFormat": "あと %s",
+        "overFormat": "%s 超過"
     }
 }

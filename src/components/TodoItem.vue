@@ -83,9 +83,9 @@ export default {
         timeStr += `${Math.floor(secMod)}${this.localize.sec}`;
       }
       if (isPassed) {
-        return this.localize.over.replace("%s", timeStr);
+        return this.localize.overFormat.replace("%s", timeStr);
       } else {
-        return this.localize.remaining.replace("%s", timeStr);
+        return this.localize.remainingFormat.replace("%s", timeStr);
       }
     },
   },
