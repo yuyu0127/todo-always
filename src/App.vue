@@ -1,36 +1,49 @@
 <template>
   <div id="app">
-    <div class="bar"></div>
+    <Bar />
     <TodoList />
   </div>
 </template>
 
 <script>
 import TodoList from "./components/TodoList.vue";
+import Bar from "./components/Bar.vue";
 
 export default {
   name: "App",
   components: {
     TodoList,
+    Bar,
   },
+  methods: {
+    setProperty: function(name, value) {
+      document.querySelector(":root").style.setProperty(name, value);
+    },
+  },
+  mounted: function() {},
 };
 </script>
 
 <style>
 :root {
-  --main-bg-rgb: 16, 16, 16;
-  --main-bg-alpha: 0.9;
-  --modal-bg-rgb: 32, 32, 32;
-  --modal-bg-alpha: 0.9;
-  --main-rgb: 255, 255, 255;
-  --main-alpha: 0.8;
-  --gray-color: rgba(255, 255, 255, 0.3);
-  --danger-font-color: rgba(255, 32, 32, 0.9);
-  --theme-color: rgba(108, 192, 229, 0.9);
+  --main-background-color: 16, 16, 16;
+  --main-background-alpha: 0.9;
+  --modal-background-color: 32, 32, 32;
+  --modal-backgound-alpha: 0.9;
+  --main-foreground-color: 255, 255, 255;
+  --main-foreground-alpha: 0.8;
+  --quiet-foreground-color: 255, 255, 255;
+  --quiet-foreground-alpha: 0.3;
+  --highlighted-foreground-color: 255, 32, 32;
+  --highlighted-foreground-alpha: 0.9;
+  --theme-color: rgb(108, 192, 229);
 }
 
 html {
-  background-color: rgba(var(--main-bg-rgb), var(--main-bg-alpha));
+  background-color: rgba(
+    var(--main-background-color),
+    var(--main-background-alpha)
+  );
 }
 
 body {
@@ -40,12 +53,5 @@ body {
 
 #app {
   height: 100%;
-}
-
-.bar {
-  background-color: rgba(32, 64, 80, 0.8);
-  height: 16px;
-  width: 100%;
-  -webkit-app-region: drag;
 }
 </style>

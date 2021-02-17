@@ -4,7 +4,10 @@
     :class="[
       { done: item.isDone },
       { passed: remainingTime < 0 },
-      { hidden: item.isDeleted },
+      {
+        hidden:
+          (item.isDeleted && hideDeletedTask) || (item.isDone && hideDoneTask),
+      },
     ]"
   >
     <input type="checkbox" :id="item.id" v-model="item.isDone" />
@@ -39,6 +42,8 @@ export default {
     return {
       remainingTime: Date.now(),
       setIntervalId: null,
+      hideDoneTask: this.$config.hideDoneTask,
+      hideDeletedTask: this.$config.hideDeletedTask,
     };
   },
   computed: {
@@ -163,14 +168,17 @@ input[type="checkbox"]:checked + label:before {
 }
 
 label {
-  color: rgba(var(--main-rgb), var(--main-alpha));
+  color: rgba(var(--main-foreground-color), var(--main-foreground-alpha));
   transition: all 0.3s;
 }
 .passed label {
-  color: var(--danger-font-color);
+  color: rgba(
+    var(--highlighted-foreground-color),
+    var(--highlighted-foreground-alpha)
+  );
 }
 .done label {
-  color: var(--gray-color);
+  color: rgba(var(--quiet-foreground-color), var(--quiet-foreground-alpha));
 }
 
 .title {
@@ -187,7 +195,10 @@ label {
   top: 10px;
   width: 0;
   height: 1px;
-  background-color: var(--gray-color);
+  background-color: rgba(
+    var(--quiet-foreground-color),
+    var(--quiet-foreground-alpha)
+  );
   content: "";
   transition: all 0.3s;
 }

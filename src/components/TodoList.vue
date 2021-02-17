@@ -45,9 +45,24 @@ export default {
   },
   computed: {
     sortedItemList: function() {
-      return [...this.itemList].sort(
-        (a, b) => new Date(a.deadline) - new Date(b.deadline)
-      );
+      let list = [...this.itemList];
+      list = list.sort((a) => a.id);
+      if (this.$config.sortByDeadline) {
+        list = list.sort((a) => (isNaN(new Date(a.deadline)) ? 1 : -1));
+        list = list.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
+      }
+      if (this.$config.sortByStatus) {
+        list = list.sort((a, b) => {
+          if (a.isDone == b.isDone) {
+            return 0;
+          } else if (a.isDone && !b.isDone) {
+            return 1;
+          } else {
+            return -1;
+          }
+        });
+      }
+      return list;
     },
   },
   methods: {
@@ -123,6 +138,7 @@ export default {
 }
 .todo-list {
   height: calc(100% - 16px);
+  margin-top: 16px;
 }
 .add-button {
   width: 100%;

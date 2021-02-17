@@ -76,7 +76,7 @@ export default {
   min-width: 210px;
   margin: 5em;
   padding: 1em;
-  background: rgba(var(--modal-bg-rgb), var(--modal-bg-alpha));
+  background: rgba(var(--modal-background-color), var(--modal-backgound-alpha));
 }
 
 input {
@@ -84,7 +84,7 @@ input {
   width: 100%;
   background: none;
   border: none;
-  color: rgba(var(--main-rgb), var(--main-alpha));
+  color: rgba(var(--main-foreground-color), var(--main-foreground-alpha));
 }
 
 input:focus {
@@ -95,7 +95,10 @@ input:focus {
   position: relative;
   margin-bottom: 1em;
   height: 1px;
-  background: var(--gray-color);
+  background: rgba(
+    var(--quiet-foreground-color),
+    var(--quiet-foreground-alpha)
+  );
 }
 
 .input-underline::after {
@@ -105,7 +108,10 @@ input:focus {
   bottom: 0;
   height: 1px;
   width: 0%;
-  background: var(--gray-color);
+  background: rgba(
+    var(--quiet-foreground-color),
+    var(--quiet-foreground-alpha)
+  );
   transition: all 300ms;
 }
 

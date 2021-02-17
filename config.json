@@ -1,0 +1,19 @@
+{
+    "hideDeletedTask": true,
+    "hideDoneTask": false,
+    "sortByDeadline": true,
+    "sortByStatus": true,
+    "appearances": {
+        "main.background.color": "#101010",
+        "main.background.alpha": 0.9,
+        "main.foreground.color": "#ffffff",
+        "main.foreground.alpha": 0.8,
+        "quiet.foreground.color": "#ffffff",
+        "quiet.foreground.alpha": 0.3,
+        "highlighted.foreground.color": "#ff2020",
+        "highlighted.foreground.alpha": 0.9,
+        "modal.background.color": "#202020",
+        "modal.background.alpha": 0.9,
+        "theme.color": "#6cc0e4"
+    }
+}
