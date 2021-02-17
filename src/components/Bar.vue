@@ -16,7 +16,7 @@ export default {
 
 <style scoped>
 .bar {
-  background-color: rgba(32, 64, 80, 0.8);
+  background-color: rgba(var(--theme-color), var(--bar-alpha));
   height: 16px;
   width: 100%;
   -webkit-app-region: drag;

@@ -15,6 +15,7 @@
         "modal.background.color": "32, 32, 32",
         "modal.background.alpha": 0.9,
         "theme.color": "108, 192, 228",
-        "theme.alpha": 0.8
+        "theme.alpha": 0.8,
+        "bar.alpha": 0.5
     }
 }
