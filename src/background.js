@@ -5,6 +5,7 @@ import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
+const fs = require('fs')
 const path = require("path")
 let tray = null
 let win = null
@@ -15,10 +16,16 @@ protocol.registerSchemesAsPrivileged([
 ])
 
 async function createWindow() {
+  let bounds = null;
+  try {
+    bounds = JSON.parse(fs.readFileSync('restore.json', { encoding: 'utf8' }))
+  } catch (e) {
+    bounds = { width: 310, height: 280 }
+  }
+
   // Create the browser window.
   win = new BrowserWindow({
-    width: 310,
-    height: 280,
+    ...bounds,
     frame: false,
     transparent: true,
     skipTaskbar: true,
@@ -40,6 +47,10 @@ async function createWindow() {
     win.setAlwaysOnTop(!win.isAlwaysOnTop())
     return win.isAlwaysOnTop()
   });
+
+  win.on('close', () => {
+    fs.writeFileSync('restore.json', JSON.stringify(win.getBounds()))
+  })
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
