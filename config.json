@@ -17,5 +17,17 @@
         "theme.color": "108, 192, 228",
         "theme.alpha": 0.8,
         "bar.alpha": 0.3
+    },
+    "localize": {
+        "taskNamePlaceholder": "タスクを入力しよう！",
+        "taskNameNotSet": "タスク未設定",
+        "deadlineNotSet": "締切なし",
+        "dateFormat": "M/D(dd) HH:mm",
+        "day": "日",
+        "hour": "時間",
+        "min": "分",
+        "sec": "秒",
+        "remaining": "あと %s",
+        "over": "%s 超過"
     }
 }

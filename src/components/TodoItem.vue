@@ -12,7 +12,9 @@
   >
     <input type="checkbox" :id="item.id" v-model="item.isDone" />
     <label class="content" :for="item.id">
-      <div class="title">{{ item.title ? item.title : "タスク未設定" }}</div>
+      <div class="title">
+        {{ item.title ? item.title : localize.taskNameNotSet }}
+      </div>
       <div class="timeinfo">
         <div class="deadline">{{ deadlineStr }}</div>
         <div class="remain">{{ remainingTimeStr }}</div>
@@ -44,14 +46,15 @@ export default {
       setIntervalId: null,
       hideDoneTask: this.$config.hideDoneTask,
       hideDeletedTask: this.$config.hideDeletedTask,
+      localize: this.$config.localize,
     };
   },
   computed: {
     deadlineStr: function() {
       if (!this.item.deadline) {
-        return "締切なし";
+        return this.localize.deadlineNotSet;
       }
-      return dayjs(this.item.deadline).format("M/D(dd) HH:mm");
+      return dayjs(this.item.deadline).format(this.localize.dateFormat);
     },
 
     remainingTimeStr: function() {
@@ -66,26 +69,24 @@ export default {
       const secMod = sec % 60;
       const minMod = min % 60;
       const hourMod = hour % 24;
-      let str = "";
-      if (!isPassed) {
-        str += "あと ";
-      }
+      let timeStr = "";
       if (day > 1) {
-        str += `${Math.floor(day)}日`;
-        str += `${Math.floor(hourMod)}時間`;
+        timeStr += `${Math.floor(day)}${this.localize.day}`;
+        timeStr += `${Math.floor(hourMod)}${this.localize.hour}`;
       } else if (hour > 1) {
-        str += `${Math.floor(hourMod)}時間`;
-        str += `${Math.floor(minMod)}分`;
+        timeStr += `${Math.floor(hourMod)}${this.localize.hour}`;
+        timeStr += `${Math.floor(minMod)}${this.localize.min}`;
       } else if (min > 1) {
-        str += `${Math.floor(minMod)}分`;
-        str += `${Math.floor(secMod)}秒`;
+        timeStr += `${Math.floor(minMod)}${this.localize.min}`;
+        timeStr += `${Math.floor(secMod)}${this.localize.sec}`;
       } else {
-        str += `${Math.floor(secMod)}秒`;
+        timeStr += `${Math.floor(secMod)}${this.localize.sec}`;
       }
       if (isPassed) {
-        str += " 超過";
+        return this.localize.over.replace("%s", timeStr);
+      } else {
+        return this.localize.remaining.replace("%s", timeStr);
       }
-      return str;
     },
   },
   mothods: {},
