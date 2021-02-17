@@ -44,7 +44,7 @@ export default {
 
 <style scoped>
 .bar {
-  background-color: rgba(var(--theme-color), var(--bar-alpha));
+  background-color: rgba(var(--bar-color), var(--bar-alpha));
   height: 16px;
   width: 100%;
   -webkit-app-region: drag;
@@ -73,7 +73,7 @@ export default {
   height: 100%;
   transform: rotate(45deg);
   background: rgba(var(--main-background-color), var(--main-background-alpha));
-  border: 1px solid rgba(var(--theme-color), var(--bar-alpha));
+  border: 1px solid rgba(var(--bar-color), var(--bar-alpha));
 }
 
 button {
