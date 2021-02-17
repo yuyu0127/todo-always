@@ -17,10 +17,19 @@ export default {
   },
   methods: {
     setProperty: function(name, value) {
+      console.log(name, value);
       document.querySelector(":root").style.setProperty(name, value);
     },
   },
-  mounted: function() {},
+  mounted: function() {
+    const appearances = this.$config.appearances;
+    Object.keys(appearances).forEach((key) => {
+      const name = "--" + key.replace(/\./g, "-");
+      const value = appearances[key];
+      this.setProperty(name, value);
+      console.log(name, value);
+    });
+  },
 };
 </script>
 
@@ -36,7 +45,7 @@ export default {
   --quiet-foreground-alpha: 0.3;
   --highlighted-foreground-color: 255, 32, 32;
   --highlighted-foreground-alpha: 0.9;
-  --theme-color: rgb(108, 192, 229);
+  --theme-color: rgb(108, 192, 228);
 }
 
 html {

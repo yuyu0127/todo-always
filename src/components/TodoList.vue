@@ -161,7 +161,7 @@ export default {
   left: 50%;
   right: 50%;
   height: 1px;
-  background: var(--theme-color);
+  background: rgba(var(--theme-color), var(--theme-alpha));
   opacity: 0.3;
   transition: all 300ms;
 }

@@ -147,7 +147,7 @@ input[type="checkbox"] + label:before {
   display: block;
   width: 20px;
   height: 20px;
-  border: 1px solid var(--theme-color);
+  border: 1px solid rgba(var(--theme-color), var(--theme-alpha));
   position: absolute;
   left: 0;
   top: 50%;
@@ -218,7 +218,7 @@ label {
 button {
   border: none;
   background: none;
-  color: var(--theme-color);
+  color: rgba(var(--theme-color), var(--theme-alpha));
 }
 .edit {
   right: 25px;

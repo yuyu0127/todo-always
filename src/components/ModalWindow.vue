@@ -118,7 +118,7 @@ input:focus {
 .input-underline.focused::after {
   content: "";
   width: 100%;
-  background: var(--theme-color);
+  background: rgba(var(--theme-color), var(--theme-alpha));
 }
 
 .button-wrapper {
@@ -129,7 +129,7 @@ input:focus {
 button {
   cursor: pointer;
   width: 50px;
-  color: var(--theme-color);
+  color: rgba(var(--theme-color), var(--theme-alpha));
   background: none;
   border: none;
   font-size: 1em;
