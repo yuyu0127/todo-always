@@ -16,8 +16,10 @@
         "modal.background.alpha": 0.9,
         "theme.color": "108, 192, 228",
         "theme.alpha": 0.8,
-        "bar.color": "32, 64, 80",
-        "bar.alpha": 0.8
+        "bar.background.color": "32, 64, 80",
+        "bar.background.alpha": 0.9,
+        "bar.foreground.color": "255, 255, 255",
+        "bar.foreground.alpha": 0.5
     },
     "localize": {
         "taskNamePlaceholder": "タスクを入力しよう！",

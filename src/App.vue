@@ -44,7 +44,10 @@ export default {
   --highlighted-foreground-color: 255, 32, 32;
   --highlighted-foreground-alpha: 0.9;
   --theme-color: rgb(108, 192, 228);
-  --bar-alpha: 0.3;
+  --bar-background-color: 32, 64, 80;
+  --bar-background-alpha: 0.8;
+  --bar-foreground-color: 255, 255, 255;
+  --bar-foreground-alpha: 0.5;
 }
 
 html {

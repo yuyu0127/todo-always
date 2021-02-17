@@ -44,7 +44,10 @@ export default {
 
 <style scoped>
 .bar {
-  background-color: rgba(var(--bar-color), var(--bar-alpha));
+  background-color: rgba(
+    var(--bar-background-color),
+    var(--bar-background-alpha)
+  );
   height: 16px;
   width: 100%;
   -webkit-app-region: drag;
@@ -61,19 +64,24 @@ export default {
   opacity: 1;
 }
 
-.disabled {
+.pin {
   position: relative;
 }
-.disabled::after {
+.pin::after {
   content: "";
   position: absolute;
   left: calc(50% - 2px);
-  top: -1px;
+  top: -2px;
   width: 2px;
-  height: 100%;
-  transform: rotate(45deg);
-  background: rgba(var(--main-background-color), var(--main-background-alpha));
-  border: 1px solid rgba(var(--bar-color), var(--bar-alpha));
+  height: 18px;
+  transform: scale(0) rotate(45deg);
+  background: rgba(var(--bar-foreground-color), var(--bar-foreground-alpha));
+  border: 1px solid
+    rgba(var(--bar-background-color), var(--bar-background-alpha));
+  transition: all 100ms;
+}
+.pin.disabled::after {
+  transform: scale(1) rotate(45deg);
 }
 
 button {
@@ -86,7 +94,7 @@ button {
   height: 100%;
   margin: 0 3px;
   padding: 0;
-  color: rgba(var(--main-background-color), var(--main-background-alpha));
+  color: rgba(var(--bar-foreground-color), var(--bar-foreground-alpha));
 }
 button:focus {
   outline: none;
@@ -97,6 +105,6 @@ button:focus {
   margin-left: 2px;
   margin-top: 5px;
   border-bottom: 2px solid
-    rgba(var(--main-background-color), var(--main-background-alpha));
+    rgba(var(--bar-foreground-color), var(--bar-foreground-alpha));
 }
 </style>
