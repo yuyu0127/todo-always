@@ -55,6 +55,22 @@ html {
     var(--main-background-alpha)
   );
 }
+::-webkit-scrollbar {
+  width: 0.2em;
+}
+::-webkit-scrollbar-track {
+  background: rgba(var(--main-background-color), var(--main-background-alpha));
+  border: none;
+  border-radius: 0.2em;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(
+    var(--quiet-foreground-color),
+    var(--quiet-foreground-alpha)
+  );
+  border-radius: 0.2em;
+  box-shadow: none;
+}
 
 body {
   margin: 0;
