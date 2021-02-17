@@ -208,7 +208,7 @@ label {
 
 .deadline {
   display: inline-block;
-  width: 110px;
+  width: 105px;
 }
 .remain {
   display: inline-block;

@@ -141,4 +141,9 @@ button {
 button:focus {
   outline: none;
 }
+
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+  opacity: 0.5;
+}
 </style>
