@@ -1,9 +1,19 @@
 <template>
   <div class="bar">
     <div class="buttons">
-      <button class="close"><font-awesome-icon icon="times" /></button>
-      <button class="minimize"><div class="underline"></div></button>
-      <button class="pin"><font-awesome-icon icon="thumbtack" /></button>
+      <button @click="closeWindow" class="close">
+        <font-awesome-icon icon="times" />
+      </button>
+      <button @click="minimizeWindow" class="minimize">
+        <div class="underline"></div>
+      </button>
+      <button
+        @click="toggleAlwaysOnTop"
+        class="pin"
+        :class="{ disabled: !isAlwaysOnTop }"
+      >
+        <font-awesome-icon icon="thumbtack" />
+      </button>
     </div>
   </div>
 </template>
@@ -11,6 +21,24 @@
 <script>
 export default {
   name: "Bar",
+  data: function() {
+    return {
+      isAlwaysOnTop: false,
+    };
+  },
+  methods: {
+    closeWindow: function() {
+      window.electron.closeWindow();
+    },
+    minimizeWindow: function() {
+      window.electron.minimizeWindow();
+    },
+    toggleAlwaysOnTop: function() {
+      window.electron.toggleAlwaysOnTop().then((result) => {
+        this.isAlwaysOnTop = result;
+      });
+    },
+  },
 };
 </script>
 
@@ -31,6 +59,21 @@ export default {
   display: flex;
   flex-direction: row-reverse;
   opacity: 1;
+}
+
+.disabled {
+  position: relative;
+}
+.disabled::after {
+  content: "";
+  position: absolute;
+  left: calc(50% - 2px);
+  top: -1px;
+  width: 2px;
+  height: 100%;
+  transform: rotate(45deg);
+  background: rgba(var(--main-background-color), var(--main-background-alpha));
+  border: 1px solid rgba(var(--theme-color), var(--bar-alpha));
 }
 
 button {

@@ -95,7 +95,7 @@ export default {
     },
     saveJson: function() {
       const data = JSON.stringify(this.itemList);
-      window.requires.fs.writeFile("todo.json", data, (err) => {
+      window.electron.fs.writeFile("todo.json", data, (err) => {
         if (err) {
           console.log(err);
         }
@@ -103,7 +103,7 @@ export default {
     },
   },
   mounted: function() {
-    window.requires.fs.readFile(
+    window.electron.fs.readFile(
       "todo.json",
       { encoding: "utf8" },
       (err, data) => {

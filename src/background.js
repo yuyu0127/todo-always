@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, Tray, Menu } from 'electron'
+import { app, protocol, BrowserWindow, Tray, Menu, ipcMain } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
 const isDevelopment = process.env.NODE_ENV !== 'production'
@@ -28,6 +28,19 @@ async function createWindow() {
     }
   })
 
+  ipcMain.on('close-window', () => {
+    if (process.platform !== 'darwin') {
+      app.quit()
+    }
+  });
+  ipcMain.on('minimize-window', () => {
+    win.minimize()
+  });
+  ipcMain.handle('toggle-always-on-top', () => {
+    win.setAlwaysOnTop(!win.isAlwaysOnTop())
+    return win.isAlwaysOnTop()
+  });
+
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
     await win.loadURL(process.env.WEBPACK_DEV_SERVER_URL)
@@ -49,7 +62,6 @@ async function createTray() {
   }
   const contextMenu = Menu.buildFromTemplate([
     { label: '表示', click: () => win.focus() },
-    { label: '常に最前面に表示', type: 'checkbox', click: (menuItem) => win.setAlwaysOnTop(menuItem.checked) },
     { label: '終了', role: 'quit' },
   ])
   tray = new Tray(imgFilePath)

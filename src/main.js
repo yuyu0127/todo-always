@@ -15,7 +15,7 @@ library.add(faThumbtack)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.config.productionTip = false
-Vue.prototype.$config = JSON.parse(window.requires.fs.readFileSync('config.json', { encoding: 'utf8' }));
+Vue.prototype.$config = JSON.parse(window.electron.fs.readFileSync('config.json', { encoding: 'utf8' }));
 
 new Vue({
   render: h => h(App),
