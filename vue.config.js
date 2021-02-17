@@ -10,6 +10,9 @@ module.exports = {
           target: 'nsis',
           icon: 'build/icon.png',
         },
+        extraFiles: [
+          'config.json'
+        ]
       }
     }
   }
