@@ -1,5 +1,7 @@
 # ToDo Always
 
+![ロゴ](screenshot/logo.png)
+
 ## このアプリは何？
 
 デスクトップに常駐させられる ToDo アプリです。
