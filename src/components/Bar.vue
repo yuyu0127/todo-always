@@ -65,23 +65,11 @@ export default {
 }
 
 .pin {
-  position: relative;
-}
-.pin::after {
-  content: "";
-  position: absolute;
-  left: calc(50% - 2px);
-  top: -2px;
-  width: 2px;
-  height: 18px;
-  transform: scale(0) rotate(45deg);
-  background: rgba(var(--bar-foreground-color), var(--bar-foreground-alpha));
-  border: 1px solid
-    rgba(var(--bar-background-color), var(--bar-background-alpha));
+  opacity: 1;
   transition: all 100ms;
 }
-.pin.disabled::after {
-  transform: scale(1) rotate(45deg);
+.pin.disabled {
+  opacity: 0.33;
 }
 
 button {

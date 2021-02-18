@@ -4,6 +4,7 @@
       <transition-group name="item">
         <TodoItem
           v-on:deleteItem="deleteItem"
+          v-on:restoreItem="restoreItem"
           v-on:editItem="editItem"
           v-on:confirmEdit="confirmEdit"
           v-on:cancelEdit="cancelEdit"
@@ -68,6 +69,9 @@ export default {
   methods: {
     deleteItem: function(item) {
       this.itemList.find((x) => x == item).isDeleted = true;
+    },
+    restoreItem: function(item) {
+      this.itemList.find((x) => x == item).isDeleted = false;
     },
     editItem: function(item) {
       this.activeItem = item;

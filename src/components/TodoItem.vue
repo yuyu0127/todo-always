@@ -3,6 +3,7 @@
     class="item"
     :class="[
       { done: item.isDone },
+      { deleted: item.isDeleted },
       { passed: remainingTime < 0 },
       {
         hidden:
@@ -22,8 +23,19 @@
       <button class="edit" @click="$emit('editItem', item)">
         <font-awesome-icon :icon="['far', 'edit']" />
       </button>
-      <button class="delete" @click="$emit('deleteItem', item)">
+      <button
+        class="delete"
+        @click="$emit('deleteItem', item)"
+        v-show="!item.isDeleted"
+      >
         <font-awesome-icon :icon="['far', 'trash-alt']" />
+      </button>
+      <button
+        class="restore"
+        @click="$emit('restoreItem', item)"
+        v-show="item.isDeleted"
+      >
+        <font-awesome-icon icon="trash-restore-alt" />
       </button>
     </label>
   </div>
@@ -181,6 +193,9 @@ label {
 .done label {
   color: rgba(var(--quiet-foreground-color), var(--quiet-foreground-alpha));
 }
+.deleted label {
+  color: rgba(var(--quiet-foreground-color), var(--quiet-foreground-alpha));
+}
 
 .title {
   font-size: 1.3em;
@@ -224,7 +239,8 @@ button {
 .edit {
   right: 25px;
 }
-.delete {
+.delete,
+.restore {
   right: 5px;
 }
 button {
