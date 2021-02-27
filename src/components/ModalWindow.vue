@@ -37,20 +37,20 @@ export default {
     confirmEdit: Function,
     cancelEdit: Function,
   },
-  data: function() {
+  data() {
     return {
       textFocused: false,
       datetimeFocused: false,
     };
   },
   watch: {
-    item: function() {
+    item() {
       this.$refs.title.focus();
     },
   },
   computed: {},
   mothods: {},
-  mounted: function() {},
+  mounted() {},
 };
 </script>
 

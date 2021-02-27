@@ -52,7 +52,7 @@ export default {
   props: {
     item: Object,
   },
-  data: function() {
+  data() {
     return {
       remainingTime: Date.now(),
       setIntervalId: null,
@@ -62,14 +62,14 @@ export default {
     };
   },
   computed: {
-    deadlineStr: function() {
+    deadlineStr() {
       if (!this.item.deadline) {
         return this.localize.deadlineNotSet;
       }
       return dayjs(this.item.deadline).format(this.localize.dateFormat);
     },
 
-    remainingTimeStr: function() {
+    remainingTimeStr() {
       if (isNaN(this.remainingTime)) {
         return "";
       }
@@ -102,14 +102,14 @@ export default {
     },
   },
   mothods: {},
-  mounted: function() {
+  mounted() {
     let self = this;
     this.setIntervalId = setInterval(function() {
       const rt = dayjs(self.item.deadline).diff(dayjs());
       self.remainingTime = rt;
     }, 100);
   },
-  destroyed: function() {
+  destroyed() {
     clearInterval(this.setIntervalId);
   },
 };

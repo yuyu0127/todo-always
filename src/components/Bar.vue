@@ -24,24 +24,24 @@
 <script>
 export default {
   name: "Bar",
-  data: function() {
+  data() {
     return {
       isAlwaysOnTop: false,
     };
   },
   methods: {
-    closeWindow: function() {
+    closeWindow() {
       window.electron.closeWindow();
     },
-    minimizeWindow: function() {
+    minimizeWindow() {
       window.electron.minimizeWindow();
     },
-    toggleAlwaysOnTop: function() {
+    toggleAlwaysOnTop() {
       window.electron.toggleAlwaysOnTop().then((result) => {
         this.isAlwaysOnTop = result;
       });
     },
-    authenticate: function() {
+    authenticate() {
       window.electron
         .authenticate()
         .then((result) => {

@@ -45,7 +45,7 @@ export default {
     ModalWindow,
   },
   computed: {
-    sortedItemList: function() {
+    sortedItemList() {
       let list = [...this.itemList];
       list = list.sort((a) => a.id);
       if (this.$config.sortByDeadline) {
@@ -78,15 +78,15 @@ export default {
       this.copiedItem = Object.assign({}, item);
       this.showModal = true;
     },
-    confirmEdit: function() {
+    confirmEdit() {
       this.activeItem.title = this.copiedItem.title;
       this.activeItem.deadline = this.copiedItem.deadline;
       this.showModal = false;
     },
-    cancelEdit: function() {
+    cancelEdit() {
       this.showModal = false;
     },
-    addItem: function() {
+    addItem() {
       const newItem = {
         id: this.itemList.length + 1,
         title: "",
@@ -97,7 +97,7 @@ export default {
       this.itemList.push(newItem);
       this.editItem(newItem);
     },
-    saveJson: function() {
+    saveJson() {
       const data = JSON.stringify(this.itemList);
       window.electron.fs.writeFile("todo.json", data, (err) => {
         if (err) {
@@ -106,7 +106,7 @@ export default {
       });
     },
   },
-  mounted: function() {
+  mounted() {
     window.electron.fs.readFile(
       "todo.json",
       { encoding: "utf8" },
@@ -122,7 +122,7 @@ export default {
   },
   watch: {
     itemList: {
-      handler: function() {
+      handler() {
         this.saveJson();
       },
       deep: true,

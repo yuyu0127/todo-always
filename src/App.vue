@@ -20,7 +20,7 @@ export default {
       document.querySelector(":root").style.setProperty(name, value);
     },
   },
-  mounted: function() {
+  mounted() {
     const appearances = this.$config.appearances;
     Object.keys(appearances).forEach((key) => {
       const name = "--" + key.replace(/\./g, "-");
