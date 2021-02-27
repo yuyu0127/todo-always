@@ -37,6 +37,7 @@
     "electron-devtools-installer": "^3.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "google-auth-library": "^7.0.2",
     "vue-cli-plugin-dayjs": "~0.1.2",
     "vue-cli-plugin-electron-builder": "~2.0.0-rc.6",
     "vue-template-compiler": "^2.6.11"

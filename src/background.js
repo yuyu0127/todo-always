@@ -3,12 +3,23 @@
 import { app, protocol, BrowserWindow, Tray, Menu, ipcMain } from 'electron'
 import { createProtocol } from 'vue-cli-plugin-electron-builder/lib'
 import installExtension, { VUEJS_DEVTOOLS } from 'electron-devtools-installer'
+const { OAUTH_CLIENT } = require('./secrets');
+const { OAuth2Client } = require('google-auth-library');
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 const fs = require('fs')
 const path = require("path")
 let tray = null
 let win = null
+
+
+const initOAuthClient = () => {
+  return new OAuth2Client({
+    clientId: OAUTH_CLIENT.client_id,
+    clientSecret: OAUTH_CLIENT.client_secret,
+    redirectUri: 'urn:ietf:wg:oauth:2.0:oob',
+  });
+};
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
@@ -37,6 +48,18 @@ async function createWindow() {
   ipcMain.on('minimize-window', () => {
     win.minimize()
   });
+
+  ipcMain.handle('auth-start', async () => {
+    const client = initOAuthClient();
+    const url = client.generateAuthUrl({
+      scope: ['https://www.googleapis.com/auth/tasks'],
+    });
+    const auth = new BrowserWindow({ x: 0, y: 0, useContentSize: true });
+    const code = await getOAuthCodeByInteraction(auth, url);
+    const response = await client.getToken(code);
+    return response.tokens;
+  });
+
   ipcMain.handle('toggle-always-on-top', () => {
     win.setAlwaysOnTop(!win.isAlwaysOnTop())
     return win.isAlwaysOnTop()
@@ -83,6 +106,29 @@ function getBounds() {
     bounds = { width: 310, height: 280 }
   }
   return bounds;
+}
+
+function getOAuthCodeByInteraction(interactionWindow, authPageURL) {
+  interactionWindow.loadURL(authPageURL, { userAgent: 'Chrome' });
+  return new Promise((resolve, reject) => {
+    const onclosed = () => {
+      reject('Interaction ended intentionally ;(');
+    };
+    interactionWindow.on('closed', onclosed);
+    interactionWindow.on('page-title-updated', (ev) => {
+      const url = new URL(ev.sender.getURL());
+      if (url.searchParams.get('approvalCode')) {
+        interactionWindow.removeListener('closed', onclosed);
+        interactionWindow.close();
+        return resolve(url.searchParams.get('approvalCode'));
+      }
+      if ((url.searchParams.get('response') || '').startsWith('error=')) {
+        interactionWindow.removeListener('closed', onclosed);
+        interactionWindow.close();
+        return reject(url.searchParams.get('response'));
+      }
+    });
+  });
 }
 
 function createConfigIfNotExists() {

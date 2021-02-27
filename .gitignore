@@ -27,3 +27,4 @@ pnpm-debug.log*
 todo.json
 restore.json
 config.json
+src/secrets.js

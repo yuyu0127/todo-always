@@ -14,6 +14,9 @@
       >
         <font-awesome-icon icon="thumbtack" />
       </button>
+      <button @click="authenticate" class="cloud">
+        <font-awesome-icon icon="cloud" />
+      </button>
     </div>
   </div>
 </template>
@@ -37,6 +40,17 @@ export default {
       window.electron.toggleAlwaysOnTop().then((result) => {
         this.isAlwaysOnTop = result;
       });
+    },
+    authenticate: function() {
+      window.electron
+        .authenticate()
+        .then((result) => {
+          console.log("認証成功");
+          console.log(result);
+        })
+        .catch(() => {
+          console.log("認証エラー");
+        });
     },
   },
 };
